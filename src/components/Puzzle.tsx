@@ -9,7 +9,7 @@ type Props = {
 
 type State = {
     inputText: string,
-    progressText: ProgressWord[],
+    progress: ProgressWord[],
     isSolved: boolean,
     hintCount: number
 }
@@ -31,7 +31,7 @@ export default class Puzzle extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.goal = this.props.goal.split(this.separators)
-        this.state = {inputText: '', progressText: [], isSolved: false, hintCount: 0};
+        this.state = {inputText: '', progress: [], isSolved: false, hintCount: 0};
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -69,7 +69,7 @@ export default class Puzzle extends React.Component<Props, State> {
         )
         this.setState({
             inputText: text,
-            progressText: translation,
+            progress: translation,
             isSolved: translation.length === this.goal.length && translation.reduce((prev, word) => {
                 return word.isCorrect && prev
             }, true)
@@ -82,7 +82,7 @@ export default class Puzzle extends React.Component<Props, State> {
 
     getWordAt(position: number, text: string) {
         // Special case for end of word
-        if (text[position] == ' ' && text[position - 1]) {
+        if (text[position] === ' ' && text[position - 1]) {
             position--
         }
 
@@ -112,7 +112,7 @@ export default class Puzzle extends React.Component<Props, State> {
         // If we're at the end of a solved word, enter a space
         // So that we can give a hint for the next word instead
         // TODO: Seek first existing unsolved word?
-        if (this.state.progressText.at(word.wordIndex)?.isCorrect && caretPos === currentText.length) {
+        if (this.state.progress.at(word.wordIndex)?.isCorrect && caretPos === currentText.length) {
             if (word.wordIndex >= this.goal.length - 1) return
 
             this.inputRef.current.value = currentText = currentText.substring(0, word.wordEnd) + ' ' + currentText.substring(word.wordEnd)
@@ -121,7 +121,7 @@ export default class Puzzle extends React.Component<Props, State> {
             this.lastCaretPos = word.wordEnd + 1
         }
 
-        if (this.state.progressText.at(word.wordIndex)?.isCorrect) return // This word is solved already
+        if (this.state.progress.at(word.wordIndex)?.isCorrect) return // This word is solved already
 
         const hintGoal = ChozoTranslator.translateToChozo(this.goal[word.wordIndex])?.at(0)
         if (hintGoal) {
@@ -152,7 +152,7 @@ export default class Puzzle extends React.Component<Props, State> {
         return (
             <div className='puzzle-box'>
                 <p className='puzzle-solution-text'>{this.props.goal}</p>
-                <p className='puzzle-progress-text'>{this.state.progressText.map((word, i) =>
+                <p className='puzzle-progress-text'>{this.state.progress.map((word, i) =>
                     <React.Fragment key={i}>
                         <span className={classNames({'untranslated-word mawkin-font': !word.isTranslated, 'correct-word': word.isCorrect})}>{word.output}</span>
                         <span> </span>

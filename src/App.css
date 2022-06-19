@@ -1,7 +1,18 @@
+.app {
+  --header-height: 3em;
+}
+
+.app-header {
+  height: var(--header-height);
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+}
+
 .main-body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  height: calc(100% - var(--header-height));
 }
 
 .puzzle-container {

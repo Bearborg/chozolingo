@@ -1,0 +1,41 @@
+.translator-box {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.translator-pane {
+    flex: 1 1;
+    max-width: 600px;
+    min-height: 300px;
+}
+
+.language-title {
+    margin-top: 0;
+}
+
+.translator-pane:first-of-type .language-title {
+    text-align: end;
+    padding-right: 40px;
+}
+
+.translator-pane:last-of-type .language-title {
+    text-align: start;
+    padding-left: 40px;
+}
+
+.swap-button {
+    height: 40px;
+    width: 40px;
+    display: block;
+    position: absolute;
+    padding: 1px;
+}
+
+.translator-box textarea {
+    resize: none;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
