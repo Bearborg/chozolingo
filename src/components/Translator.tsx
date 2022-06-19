@@ -14,8 +14,9 @@ type State = {
 }
 
 export default class Puzzle extends React.Component<Props, State> {
-    separators = /[ ]+/
-    blockedChars = /[^a-zA-Z ]/g
+    separators = /([ ,\.!\?\n]+)/
+    blockedChars = /[^a-zA-Z ,\.!\?\n]/g
+    wordPattern = /^[a-zA-z]+$/
     inputRef = createRef<HTMLTextAreaElement>()
     outputRef = createRef<HTMLTextAreaElement>()
 
@@ -45,10 +46,10 @@ export default class Puzzle extends React.Component<Props, State> {
         const translateWord = this.state.englishToChozo ? ChozoTranslator.translateToChozo : ChozoTranslator.translateToEnglish
         let translation = text.split(this.separators).map(
             (word) => {
-                if (!word.length) return ''
+                if (!word.length || !word.match(this.wordPattern)) return word
                 return translateWord(word)?.at(0) ?? `[${word}]`
             }
-        ).join(" ")
+        ).join("")
         if (this.state.englishToChozo) {
             this.setState({
                 englishText: text,
