@@ -4,7 +4,11 @@
 }
 
 .puzzle-progress-text {
-    height: 1em;
+    min-height: 32px;
+}
+
+.puzzle-progress-text .mawkin-font {
+    line-height: .5em;
 }
 
 .puzzle-progress-text, .puzzle-solution-text {
