@@ -68,7 +68,6 @@ export const WORD_MAP: Map<string, Array<string>> = new Map([
     ['elegar', ['prevent']],
     ['elemeh', ['narrowly']],
     ['emmi', ['EMMI']],
-    ['es', ['now']],
     ['esen', ['than']],
     ['eshdor', ['must']],
     ['ess', ['now']],
