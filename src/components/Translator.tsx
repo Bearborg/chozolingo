@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { createRef } from 'react';
 import ChozoTranslator from '../lib/chozoTranslator'
 import { SwitchHorizontalIcon } from '@heroicons/react/solid'
@@ -14,9 +13,6 @@ type State = {
 }
 
 export default class Puzzle extends React.Component<Props, State> {
-    separators = /([ ,\.!\?\n]+)/
-    blockedChars = /[^a-zA-Z ,\.!\?\n]/g
-    wordPattern = /^[a-zA-z]+$/
     inputRef = createRef<HTMLTextAreaElement>()
     outputRef = createRef<HTMLTextAreaElement>()
 
@@ -38,16 +34,22 @@ export default class Puzzle extends React.Component<Props, State> {
     }
 
     handleSwap() {
-        this.setState({englishToChozo: !this.state.englishToChozo}) 
+        this.setState(
+            {englishToChozo: !this.state.englishToChozo},
+            this.handleChange // Use handleChange as a callback to force a refresh of the text
+        )
     }
 
-    handleChange(event: React.FormEvent<HTMLTextAreaElement>) {
-        const text = event.currentTarget.value.replaceAll(this.blockedChars, "")
-        const translateWord = this.state.englishToChozo ? ChozoTranslator.translateToChozo : ChozoTranslator.translateToEnglish
-        let translation = text.split(this.separators).map(
+    handleChange() {
+        const text = (this.inputRef.current as HTMLTextAreaElement).value.replaceAll(ChozoTranslator.blockedChars, "")
+        const translateWord = this.state.englishToChozo ? ChozoTranslator.translateTextToChozo : ChozoTranslator.translateTextToEnglish
+        let translation = translateWord(text).map(
             (word) => {
-                if (!word.length || !word.match(this.wordPattern)) return word
-                return translateWord(word)?.at(0) ?? `[${word}]`
+                if (word.isWord) {
+                    return word.outputText?.at(0) ?? `[${word.inputText}]`
+                } else {
+                    return word.inputText
+                }
             }
         ).join("")
         if (this.state.englishToChozo) {
@@ -86,7 +88,7 @@ export default class Puzzle extends React.Component<Props, State> {
                 <h2 className='language-title'>{this.languages()[1]}</h2>
                 <textarea
                 name={this.languages()[1]}
-                autoComplete={(!this.state.englishToChozo).toString()}
+                autoComplete="false"
                 value={
                     this.state.englishToChozo
                     ? this.state.chozoText
