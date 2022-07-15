@@ -124,7 +124,7 @@ export const WORD_MAP: Map<string, Array<string>> = new Map([
     ['horek', ['accomplish', 'accomplishes']],
     ['horeki', ['accomplished']],
     ['hum', ['them', 'they']],
-    ['humas', ['being']],
+    ['huma', ['being']],
     ['hummahar', ['their']],
     ['hummis', ['themselves']],
     ['hundar', ['become', 'becomes']],
