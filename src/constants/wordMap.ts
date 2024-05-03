@@ -250,7 +250,7 @@ export const WORD_MAP: Map<string, Array<string>> = new Map([
     ['salima', ['destiny', 'destinies']],
     ['samus', ['Samus']],
     ['sanul', ['end', 'ends']],
-    ['sanul', ['ended']],
+    ['sanuli', ['ended']],
     ['saral', ['eradicate', 'eradicates']],
     ['sarali', ['eradicated']],
     ['sarar', ['gate', 'gates']],
