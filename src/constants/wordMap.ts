@@ -17,7 +17,7 @@ export const WORD_MAP: Map<string, Array<string>> = new Map([
     ['ashka', ['if']],
     ['ashkar', ['raven']],
     ['ata', ['you']],
-    ['atamahar', ['your']],
+    ['atamahar', ['your', 'yours']],
     ['atamis', ['yourself']],
     ['bados', ['lain']],
     ['bahi', ['truly']],
